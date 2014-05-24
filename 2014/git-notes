@@ -1,0 +1,230 @@
+* Git
+  - the stupid content tracker (man)
+  - the information manager from hell (linus)
+  - Global Information Tracker
+
+* Initial revision of "git", the information manager from hell
+  - April 7th, 2005 => self-hosted
+  - July 25th, 2005 => Junio Hamano (the obvious choice)
+
+* VCSs
+  - SCCS => Source Code Control System
+  - RCS => Revision Control System
+  - CVS => Concurrent Versions System
+  - SVN => Subversion (Oct 2000 by Collabnet, now Apache)
+  - BitKeeper/Bazaar/Mercurial etc.
+
+* Git on Windows
+  - Cygwin
+  - msysGit
+
+$ git help --all
+
+$ git help cmd
+$ git --help cmd
+$ git cmd --help
+
+* both file/tag named main.c
+ - git checkout main.c (tag)
+ - git checkout -- main.c (file)
+
+* Unix "gecos" information
+
+$ GIT_EDITOR (core.editor) [export GIT_EDITOR=vim]
+$ GIT_AUTHOR_NAME/GIT_COMMITTER_NAME (user.name)
+$ GIT_AUTHOR_EMAIL/GIT_COMMITTER_EMAIL (user.email)
+
+$ .git/config (default)
+$ $HOME/.gitconfig (--global)
+$ /etc/gitconfig (--system)
+
+$ git config --unset --global -e
+
+* object model
+  - blob => binary large object
+  - tree
+  - commit
+  - tag
+
+* SHA1 => 160-bit, 40-hex global unique identifier
+
+* .git => $GIT_DIR
+  - .git/{config, description, HEAD, index, info/exclude}
+  - .git/refs/heads
+  - .git/refs/tags
+  - .git/refs/remotes
+  - .git/objects/pack
+  - .git/objects/info
+
+* plumbing vs. porcelain
+
+* lightweight/annotated tags
+  - git tag -m => annotated
+
+* tracked/untracked/ignored
+
+* git rm [--cached] => remove from index and WD [index only]
+
+* git mv => git log --follow
+
+$ mv foo bar => git mv foo bar
+  git rm foo
+  git add bar
+
+* gitignore sources
+  - patterns from command line
+  - .gitignore in the same dir
+  - .gitignore in upward parent dirs
+  - $GIT_DIR/info/exclude
+  - core.excludesfile
+
+* .gitignore
+  - blank line and # => ignored
+  - literal filename => a file in any directory
+  - trailing / => dir only
+  - ! => invert
+
+* git rev-parse (man)
+  - .git/ref
+  - .git/refs/ref
+  - .git/refs/tags/ref
+  - .git/refs/heads/ref
+  - .git/refs/remotes/ref
+  - .git/refs/remotes/ref/HEAD
+
+* symrefs
+  - HEAD
+  - ORIG_HEAD (bak of HEAD, merge/reset etc.)
+  - FETCH_HEAD
+  - MERGE_HEAD (commit(s) merging in)
+  - CHERRY_PICK_HEAD
+
+* git log
+  - git log HEAD
+  - --pretty={raw|email|oneline|short|medium|full|fuller etc.}
+  - --abbrev-commit --oneline
+  - --stat -p -n(-1)
+  - --branches --tags --all
+  - --reverse
+  - --graph --decorate
+  - --merges --no-merges
+  - --merge --left-right
+
+* git log ^X Y => git log X..Y
+  - X..Y => set subtraction (X.. => X..HEAD)
+  - X...Y => symmetric difference
+
+$ git show HEAD~2
+$ git show origin/master:commons.io
+
+* gitk [--all]
+
+* git blame
+* git log -Sstring => pickaxe
+* git bisect
+  - git bisect start
+  - git bisect bad rev
+  - git bisect good rev
+  - git bisect log
+  - git bisect replay
+  - git bisect visualize ($DISPLAY => gitk | --pretty=oneline)
+  - git bisect reset
+
+* git branch -r|-a|-m|--merged|--no-merged
+
+* git show-branch
+  - +, -(merge commit), *(current)
+  - --more=n
+
+* git diff --word-diff
+  - git diff (index, WD)
+  - git diff commit [HEAD] (commit, WD)
+  - git diff --cached/--staged commit [HEAD] (commit, index)
+  - git diff commit1 commit2
+  - ----------
+  - git diff dev..master (dev, master)
+  - git diff dev...master (merge-base, master)
+
+* git diff -M(rename) --stat --name-only --name-status
+
+* git diff -Sstring vs. git log -Sstring
+
+* merge conflict
+  - git ls-files -u
+  - git status (stage numbers)
+    0. non-conflict
+    1. base
+    2. ours
+    3. theirs
+
+$ git diff --ours => git diff HEAD
+$ git diff --theirs => git diff MERGE_HEAD
+$ git diff --base => git diff $(git merge-base HEAD MERGE_HEAD)
+
+$ git diff :1:hello :3:hello (base, theirs)
+
+$ git log --merge --left-right -p path/to/file
+
+* MERGE_HEAD
+  MERGE_MSG
+  MERGE_MODE
+
+$ git checkout --ours/--theirs path/to/file (conflict resolution only)
+$ git checkout -m path/to/file (reset to original conflict state)
+
+* merge commit
+  - in the log => Merge: 7c4bea4 c7cac18
+  - diff => combined diff
+
+* undo merge
+  - git merge --abort (before commit)
+  - git reset --hard HEAD (before commit)
+  - git reset --hard ORIG_HEAD (after commit)
+
+* merge strategies
+  - degenerate
+    + already up-to-date
+    + fast-forward
+  - normal
+    + resolve
+    + recursive
+    + octopus
+  - specialty
+    + ours
+    + subtree
+
+* merge drivers
+
+* git reset
+  - --soft  => uncommit
+  - --mixed => unstage
+  - --hard  => discard (ignore untracked)
+
+$ git cherry-pick X..Y
+
+$ git revert master~3
+
+$ git checkout -- path/to/file => checkout from index
+$ git checkout HEAD -- path/to/file => checkout from HEAD
+
+$ git commit --amend -c -C
+
+$ git checkout topic => git rebase master topic
+  git rebase master
+
+$ git add -p
+  git reset -p
+  git checkout -p
+  git stash save -p
+
+* ls-files -o --exclude-standard    => untracked-files
+  ls-files -o --exclude-standard -i => ignored-files
+  ls-files -m                       => modified-files
+
+* config options
+  - diff.renames
+  - difftool.prompt
+  - mergetool.prompt
+  - mergetool.keepBackup (.orig => with conflict markers)
+  - mergetool.keepTemporaries
+  - help.autocorrect

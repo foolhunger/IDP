@@ -1,0 +1,535 @@
+* Java
+  - "Green" project, originally coined "Oak" by James Gosling
+  - whole platform (language, execution environment, library etc.)
+
+* byte-ordering => consistent
+
+* just-in-time compiler
+  - bytecodes (hot-spots) => machine code [@runtime]
+
+* Mosaic browser => Marc Andreessen (Netscape)
+
+* Java Runtime Environment (JRE)
+* Java Development Kit (JDK) => Java SDK (outdated)
+  - 1996 1.0
+  - 1997 1.1
+  - 1998 1.2
+  - 2000 1.3
+  - 2002 1.4
+  - 2004 5.0
+  - 2006 6
+  - 2011 7 (Oracle)
+  - library sources (src.zip)
+  - NO library documentation => bookmark docs/api/index.html
+
+* JAVA_HOME => jdk
+  PATH => jdk/bin (eg: %JAVA_HOME%/bin)
+  CLASSPATH
+
+$ set CLASSPATH= (Windows)
+$ export CLASSPATH= (Linux)
+
+$ appletviewer Welcome.html => <applet>
+
+* public/private/protected => access modifier
+
+* class name => CamelCase
+
+* java ClassName => start from main()
+  - must be public
+  - static (in memory when class loaded)
+  - exit code 0 (success), System.exit (others)
+
+* java statement
+  - must end with semicolon
+  - can span multiple lines
+
+* comment
+  - not in final executable
+  - //, /* */, /** */ (auto doc generation)
+
+* 8 primitive types (no unsigned types)
+
+* integral
+  - byte  8-bit
+  - short 16-bit
+  - int*  32-bit  ~2 billion
+  - long  64-bit  4000000000000L
+  - -----
+  - 0xCAFE, 010(8), 0b1001(9), 1_000_000, 0b1001_0000_1100
+
+* floating-point (IEEE754)
+  - float   32-bit  3.14F
+  - double* 64-bit  3.14D
+  - -----
+  - 0x1.acp-3 (0.208984375)
+
+* char
+  - 16-bit
+  - escape character usage
+    - quoted char constant/string ('\u2122', "Hello\n")
+    - \u0000-\uFFFF (unicode code unit, both with/without quotes)
+      eg: public static void main(String\u005B\u005D args)
+
+* boolean
+  - if (x = 0) => won't compile in java
+  - b ? 1 : 0;
+
+* identifier => $ (valid letter)
+  - Character.isJavaIdentifierStart()
+  - Character.isJavaIdentifierPart()
+
+* Constant
+  - final (name in all uppercase)
+  - static final (class constant)
+
+* integer / 0 => exception (java.lang.ArithmeticException)
+  fp / 0 => Infinity, -Infinity, NaN
+
+  15 / 2 (7), 15. / 2 (7.5), 15 % 2 (1)
+  0 / 0 (exception), 0. / 0 (NaN), sqrt(-1) (NaN)
+
+* Double/Float.POSITIVE_INFINITY
+  Double/Float.NEGATIVE_INFINITY
+  Double/Float.NaN
+  - if (x == Double.NaN) [N]
+  - if (Double.isNaN(x)) [Y]
+
+* double w = x * y / z;
+  - x * y maybe in 80-bit register (more accuracy, no overflow)
+  - strictfp (method, class)
+
+* &&, || (short circuit) <=> &, |
+
+* bitwise (integral types)
+  - ~, &, |, ^
+  - <<, >>, >>>
+  - 1 << 35 => 1 << 3 (modulo 32/64)
+  - -1 >> 31 (-1)
+  - -1 >>> 31 (1)
+
+* java.lang.Math (StrictMath)
+  - import static java.lang.Math.*;
+  - sqrt(), exp(), log(), log10(), pow(), round() etc.
+  - Math.PI, Math.E
+
+* n + f (both operands => common types)
+  - either is double => both to double
+  - either is float => both to float
+  - either is long => both to long
+  - both to int ('A' + 'B' => 131)
+
+* double x = 9.997;
+  int nx = (int) x; => 9
+  int nx = (int) Math.round(x); => 10
+
+$ enum Size {SMALL, MEDIUM, LARGE};
+$ Size s = Size.MEDIUM;
+$ Size s = null;
+
+* java.lang.String (immutable)
+  - equals()
+  - equalsIgnoreCase()
+  - format()
+  - indexOf()
+  - lastIndexOf()
+  - length()
+  - startsWith()
+  - endsWith()
+  - substring(a, b) => [a, b)
+  - toUpperCase()
+  - toLowerCase()
+  - trim()
+  - matches()/replace()/replaceAll()/split() etc. regex stuffs
+  - -----
+  - "Hello".equals(t);
+  - if (str != null && str.length() != 0)
+
+* java.lang.StringBuilder (StringBuffer)
+  $ StringBuilder sb = new StringBuilder();
+  $ sb.append();
+  $ String result = sb.toString();
+  - StringBuilder, efficient, single-threaded
+  - StringBuffer, less-efficient, mulitple-threaded
+
+* char A = 'H';
+  char ch1 = \u0041;
+  char ch2 = '\u0041';
+  ch1 => 'H';
+  ch2 => 'A';
+
+* System.in  (standard input)
+  System.out (standard output)
+  System.err (standard error)
+
+* Scanner in = new Scanner(System.in);
+  Scanner in = new Scanner(Paths.get("C:\\input.txt"));
+  Scanner in = new Scanner("myfile.txt"); => "myfile.txt" as input (10 characters)
+  in.nextLine()/next()/nextInt()/nextDouble()
+  in.hasNext()/hasNextInt()/hasNextDouble()
+
+* PrintWriter out = new PrintWriter("output.txt");
+
+* Console cons = System.console();
+  String username = cons.readLine("Username: ");
+  char[] password = cons.readPassword("Password: ");
+
+* System.out.printf("%1$,8.2f", x); => format specifier
+  - 1$ => index ($, <)
+  - , => flag (+, (, -, space, 0, #f, #x, #o)
+  - 8 => field width
+  - 2 => precision
+  - f => conversion character (%a, %b, %c, %h, %n(platform-dependent), %t[x])
+
+* %s => format arbitrary object
+  - formatTo() => java.util.Formattable
+  - toString()
+
+* String message = String.format("Hello, %s", name);
+
+* "%1$s %2$tB %2$te, %2$tY" => "%s %tB %<te, %<tY"
+
+* %tj => three-digit day of year (001~366)
+
+* String dir = System.getProperty("user.dir");
+  - user.dir  => user working directory
+  - user.home => user home directory
+  - user.name => user account name
+
+* java MyProg <input.txt >output.txt 2>error.txt
+  - System.in  => input.txt
+  - System.out => output.txt
+  - System.err => error.txt
+
+* block => compound statement
+
+* int n;
+  {
+    int k;
+    int n; // compilation error
+  }
+
+* if/else if/else
+
+* for(double x = 0; x != 10; x += 0.1); => infinite loop
+
+* for(int i = 0; i < 10; ++i)
+  {
+  }
+  // i no longer defined here
+
+  for(int i = 1 ...) {}
+  for(int i = 5 ...) {} // OK
+
+* javac -Xlint:fallthrough Test.java => switch fallthrough
+  @SuppressWarnings("fallthrough")
+
+* switch case label
+  - constant expression (char/Character, byte/Byte, short/Short, int/Integer)
+  - enumerated constant
+  - String literal
+  - -----
+  $ switch (input.toLowerCase())
+    {
+      case "yes":
+        break;
+    }
+
+  $ Size sz = Size.MEDIUM;
+    switch(sz)
+    {
+      case MEDIUM: // Size.MEDIUM
+        break;
+    }
+
+* some_label:
+  while()
+  {
+    for()
+    {
+      break some_label; // labeled break
+    }
+  }
+  // continue here
+
+* continue
+  - for loop => jump to "update" slot
+  - labeled continue
+
+* java.math.BigInteger/BigDecimal
+  - add()/subtract()/multiply()/divide()/mod()/valueOf() etc.
+  - why not +/* etc.? => Java no operator overload
+
+* int[] a = new int[n]; => not necessarily constant
+  int[] a = {1, 2, 3, 4, 5};
+  int[] a = new int[] {1, 2, 3, 4, 5};
+
+* array length => a.length
+
+* array default values (0, false, null)
+
+* a[100] => java.lang.ArrayIndexOutOfBounds exception (bounds checking)
+
+* for(variable: collection) statement
+  - enhanced for loop/"foreach" loop
+  - collection => array/java.lang.Iterable
+
+* int[] a = new int[0];
+
+* java MyProg -h world
+  - args[0] => -h
+  - args[1] => world
+
+* int[] copied = Arrays.copyOf(original, length);
+
+* java.util.Arrays
+  - toString()/deepToString()
+  - copyOf()
+  - sort() => tuned QuickSort
+  - binarySearch()
+  - fill()
+  - equals()/deepEquals()
+
+* int[][] matrix = {{1, 2, 3, 4}, {5, 6, 7}, {8}};
+
+* for(double[] row: a)
+    for(double e: row)
+      code block
+
+* int[][] ragged = new int[ROW][];
+  for(int i = 0; i < ROW; ++i)
+    ragged[i] = new int[i+1];
+
+* OOP
+  - data first
+  - encapsulation (information hiding)
+  - inheritance
+  - polymorphism (dynamic binding)
+
+* object
+  - behavior (methods)
+  - state (instance fields)
+  - identity
+
+* class relationships
+  - dependency (uses-a) => coupling
+  - aggregate (has-a)
+  - inheritance (is-a)
+
+* UML => Unified Modeling Language
+
+$ String s = new Date().toString();
+
+* Date deadline; => not null by default
+  deadline.toString(); => compile-error (variable not initialized)
+  Date deadline = null;
+  deadline.toString(); => runtime-error (java.lang.NullPointerException)
+
+$ javac -Xlint:deprecation Test.java
+
+* javac EmployeeTest.java
+  - auto search for Employee.class
+  - auto compile Employee.java on demand
+  - auto re-compile Employee.java if timestamps newer
+
+* accessor/mutator methods
+
+* java.util.GregorianCalendar
+  java.text.DateFormatSymbols
+
+* one source file => one public class + arbitrary non-public classes
+
+* constructor
+  - no return value
+  - must be called with new operator
+
+* e.raiseSalary(5);
+  - e => implicit parameter (this)
+  - 5 => explicit parameter
+
+* accessor method {
+    return mutable-object-reference; // rule of thumb: clone()
+  }
+
+* a method can access private fields of ALL objects of its class
+
+* final instance field
+  - must be initialized
+  - suitable for primitive/immutable-class
+
+* static => modifier
+
+* static field => class field
+
+* static history
+  - local variable stays around (C)
+  - global variable/function file scope (C)
+  - class variable/method (C++)
+
+* harry.setId(); => harry.id = Employee.nextId++;
+
+* static constant
+  - public static final double PI = 3.1415926...; => Math.PI
+  - public static final PrintStream out = ...; => System.out
+
+* static method
+  - no implicit parameter (this)
+  - cannot access instance fields
+
+* class/object.staticMethod()
+
+* factory method (static)
+  - NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+  - NumberFormat percentFormatter = NumberFormat.getPercentInstance();
+  - -----
+  - why not constructor?
+    - constructor names must be the same as class names
+    - constructor can only construct fixed type objects
+
+* every class can have main() => unit-test
+
+* method parameter
+  - primitive type
+  - object reference
+
+* overloading resolution
+
+* method signature => method name + parameter types
+
+* instance field (0, false, null)
+  local variable (uninitialized)
+
+* free no-argument constructor => no other constructors defined
+
+* this
+  - object being constructed (implicit parameter)
+  - this() -> first constructor statement
+
+* rule of thumb => place initialization blocks after field definitions
+
+* when a constructor is called
+  - default values (0, false, null)
+  - field initializers, object initialization blocks, in the order defined
+  - this()
+  - constructor body
+
+* when a class is loaded
+  - default values (0, false, null)
+  - static field initializers, static initialization blocks, in the order defined
+
+$ public class Hello {
+    static {
+      System.out.println("Hello, World");
+      System.exit(0);
+    }
+  }
+
+* java.util.Random
+  - nextInt(), nextInt(n), nextDouble() etc.
+  java.lang.Math
+  - Math.random()
+
+* all standard java packages => java/javax hierarchy
+
+* packages java.util/java.util.jar => no relationship
+
+* classes can use
+  - own package classes
+  - other package public classes
+
+* import java.util.*; => no negative effect on code size
+
+* [Eclipse] Source -> Organize Imports (ctrl + shift + o)
+
+$ import java.util.*;
+  import java.sql.*;
+  Date today; => compile error (Date is ambiguous)
+
+* compiler => locate classes in packages
+
+* bytecodes => only full package class names
+
+* import (classes)
+  - public classes from other packages
+  - public/non-public classes from current package
+
+* static import (static fields, methods)
+  - import static java.lang.System.out;
+
+* default access level => package scope
+
+* no package statement => default package (no package name)
+
+$ javac io/hsiao/Test.java (file)
+  java io.hsiao.Test (class)
+
+* compiler won't check directory structure when compiling source files
+
+* user-defined package names cannot start with "java." (loading disabled)
+  - java.lang.SecurityException: Prohibited package name
+
+* locate classes/files
+  - virtual machine (classes)
+    1. jre/lib, jre/lib/ext
+    2. classpath (one entry at a time)
+  - compiler (files + classes)
+    1. java.lang.Employee, Employee in all imported packages, Employee in current package (each in all classpath entries)
+       if more than one class found, compile-time error (import statement order irrelevant)
+    2. compare source/class files time stamps, recompile if needed
+       - public import from current/other packages => source file names match class names
+       - non-public import from current package => search all source files in current package
+
+* export CLASSPATH=/home/user/classes:.:/home/user/archives/'*'
+  - default classpath has "." => do not remove
+  - -cp/-classpath (preferred)
+
+* inheritance => "is-a" relationship (public inheritance only)
+
+* subclass cannot access superclass private features
+
+* subclass-constructor() {
+    // super();
+  }
+
+* this vs. super
+  - super is not a reference to an object
+  - super()/this() must be first statement in the constructor
+
+* polymorphism => an object variable can refer to multiple actual types
+  dynamic binding => auto-select appropriate methods at run-time
+
+* Java methods are "virtual" by default => final
+
+* Manager[] managers = new Manager[10];
+  Employee[] staffs = managers;
+  staffs[0] = new Employee();
+  - compilation pass
+  - runtime exception (java.lang.ArrayStoreException)
+
+* override a method
+  - method signatures should be the same
+  - return type covariant
+  - cannot supply a weaker access privilege
+  - @Override
+
+* when a method call is applied to an object
+  1. overloading resolution (declared type)
+  2. static binding => private, static, final, constructor
+  3. dynamic binding => virtual machine picks the method at runtime (actual type)
+     - virtual machine pre-computes a "method table" for each class
+     - if super is used, looks up entries in superclass method table
+
+* - cast allowed only within an inheritance hierarchy
+  - use instanceof to check before casting (java.lang.ClassCastException)
+    if (staffs[1] instanceof Manager) {
+      boss = (Manager) staffs[1];
+    }
+
+* x(null) instanceof C => false
+
+* abstract class can have fields and concrete methods
+
+* visible to the class only (private)
+  visible to the world (public)
+  visible to the package and subclasses (protected)
+  visible to the package (default)
