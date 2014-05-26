@@ -228,3 +228,41 @@ $ git add -p
   - mergetool.keepBackup (.orig => with conflict markers)
   - mergetool.keepTemporaries
   - help.autocorrect
+
+
+** SubGit
+=========
+* steps for creating writable Git mirror
+(1) subgit configure --svn-url http://.../scm scm.git
+(2) adjust default configurations
+    - authors mapping (subgit/authors.txt)
+    - svn credentials (subgit/passwd)
+    - default domain
+    - path encoding
+    - branches mapping
+    - others
+(3) subgit install scm.git
+    - ctrl+c to stop, can be resumed later
+    - install SubGit pre/post-receive hooks
+    
+* commit new SVN revisions
+  - Git commit author => Subversion author
+  - find author's credentials in all configured sources
+  - in case no credentials found, use any of the available
+  
+* SubGit background translation process
+  - SVN revisions => Git commits (on Git user push), background process restarted if necessary
+  - subgit fetch scm.git
+  - git push origin +:refs/heads/bogus_branch (no-op push)
+  - subgit shutdown scm.git
+  
+* configuration changes become effective on the fly
+  - authors mapping (authors.txt)
+  - svn credentials (passwd)
+  - user-* hooks
+  
+* subgit uninstall scm.git
+  - remove SubGit pre/post-receive hooks
+  - with --purge option, also remove
+    - SubGit binaries/logs
+    - SubGit metadata
