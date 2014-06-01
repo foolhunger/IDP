@@ -587,3 +587,37 @@ $ Employee[] staff = new Employee[10];
   public String toString() {
     return super.toString() + "[bonus=" + bonus + "]";
   }
+
+* java.util.ArrayList
+  - ensureCapacity()
+  - trimToSize()
+  - ArrayList<String> list = new ArrayList<>(20); => Java 7 (diamond operator)
+  - X[] a = new X[list.size()];
+    list.toArray(a);
+  - ArrayList<String> result = employDB.find(query); => assign "raw" to "typed" ArrayList
+    -Xlint:unchecked
+    @SuppressWarnings("unchecked")
+
+* wrapper classes (immutable, final)
+  - Byte, Short, Integer, Long, Float, Double => java.lang.Number
+    Character, Boolean, Void => java.lang.Object
+  - ArrayList<int> => ArrayList<Integer>
+  - list.add(3) => list.add(Integer.valueOf(3)) => boxing
+    int n = list.get(i) => int n = list.get(i).intValue() => unboxing
+    auto-boxing/unboxing => compiler's courtesy
+  - Integer a = 1000, b = 1000; => a.equals(b)
+  - Integer.parseInt(String s, int radix);
+    Integer.toString(int i, int radix);
+  - toBinaryString(int i);
+    toHexString(int i);
+    toOctalString(int i);
+
+* "varargs" method
+  - System.out.printf("%d %s", new Object[] {new Integer(n), "widgets"});
+  - public static void main(String... args)
+
+* enumerated types => subclass of java.lang.Enum<E>
+  - Size.SMALL.toString() => "SMALL"
+  - Size s = Enum.valueOf(Size.class, "SMALL");
+  - Size[] values = Size.values();
+  - Size.SMALL.ordinal();
