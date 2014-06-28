@@ -539,7 +539,7 @@ $ javac io/hsiao/Test.java (file)
 $ Employee[] staff = new Employee[10];
   obj = staff;
   obj = new int[] {1, 2, 3, 4, 5};
-  
+
 * equals()
   - whether object references are identical (Object class)
   - getClass() / instanceof => two scenarios
@@ -558,7 +558,7 @@ $ Employee[] staff = new Employee[10];
     Manager other = (Manager) otherObject;
     return bonus == other.bonus;
   }
-  
+
 * hashCode()
   - based on object's memory address (Object class)
   - integer as return value (can be negative)
@@ -621,3 +621,36 @@ $ Employee[] staff = new Employee[10];
   - Size s = Enum.valueOf(Size.class, "SMALL");
   - Size[] values = Size.values();
   - Size.SMALL.ordinal();
+
+* ==========> placeholder for Reflection <==========
+
+* Double.compare()
+
+* interface
+  - can supply
+  method declarations (public)
+  constants (public static final)
+  - cannot supply
+  instance fields
+  static methods
+  method implementations
+
+* Arrays.sort(oa); => "oa" must implement Comparable<T> (ClassCastException)
+
+$ public interface Moveable {}
+  public interface Powered extends Moveable {}
+
+* clone() in Object
+  - protected
+  - "shallow" copy
+
+* to support clone
+  - implement Cloneable (CloneNotSupportedException)
+  - public access modifier
+  - call super.clone()
+  - "deep" copy on demand
+
+* Cloneable => tagging/marker interface => instanceof
+
+$ int[] original = {1, 2, 3, 4, 5};
+  int[] cloned = original.clone();
