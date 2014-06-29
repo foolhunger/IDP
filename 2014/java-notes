@@ -654,3 +654,56 @@ $ public interface Moveable {}
 
 $ int[] original = {1, 2, 3, 4, 5};
   int[] cloned = original.clone();
+
+* only inner classes can be private/static
+
+* OuterClass.this (outer class object reference)
+  - if (TalkingClock.this.beep)
+  OuterClass.InnerClass
+  OuterObject.new InnerClass(constructor parameters)
+  - ActionListener listener = this.new TimePrinter();
+  - TalkingClock jabberer = new TalkingClock(1000, true);
+    TalkingClock.TimePrinter listener = jabberer.new TimePrinter();
+
+* inner class => phenomenon of compiler, not VM
+
+* javap -private classname
+
+$ public class TalkingClock$TimePrinter {
+    public TalkingClock$TimePrinter(TalkingClock);
+    final TalkingClock this$0;
+  }
+
+$ public class TalkingClock {
+    public TalkingClock(int, boolean);
+    static boolean access$000(TalkingClock);
+  }
+  // inner class access outer private data fields (potential security risk)
+
+* private inner class (no private class in VM) => package-visible class + private constructor
+  - private TalkingClock$TimePrinter(TalkingClock);
+    TalkingClock$TimePrinter(TalkingClock, TalkingClock$1);
+    new TalkingClock$TimePrinter(this, null);
+
+* local inner class
+  - no access specifier (hidden to block)
+  - can access outer class fields + local variables (final)
+
+* blank final variable
+
+$ class TalkingClock$1TimePrinter {
+    TalkingClock$1TimePrinter(TalkingClock, boolean);
+    final boolean val$beep;
+    final TalkingClock this$0;
+  }
+
+* anonymous inner class
+  - double brace initialization
+  invite(new ArrayList<String>(){{add("Tony"); add("Harry");}});
+  - logging/debugging messages for static methods
+  new Object(){}.getClass().getEnclosingClass();
+
+* static inner class (nested class)
+  - no outer class object reference
+
+* ==========> placeholder for Proxy <==========
