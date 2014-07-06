@@ -707,3 +707,100 @@ $ class TalkingClock$1TimePrinter {
   - no outer class object reference
 
 * ==========> placeholder for Proxy <==========
+
+* AWT => Abstract Window Toolkit
+
+* Write Once, Run Anywhere => Write Once, Debug Everywhere
+
+* Swing => non-peer-based (JFC)
+
+* Metal => Java look and feel (multiple themes)
+
+* SWT/JavaFX
+
+* top-level windows => frame (not painted on canvas)
+  - 0 * 0 pixels
+  - hidden on close
+  - invisible
+
+* all Swing components must be configured in event dispatch thread
+  EventQueue.invokeLater(new Runnable() {
+    @Override
+    public void run() {}
+  });
+
+* Swing library draws only inside the frame
+
+$ Toolkit kit = Toolkit.getDefaultToolkit();
+  Dimension screenSize = kit.getScreenSize();
+
+$ Image img = new ImageIcon("icon.gif").getImage();
+  setIconImage(img);
+
+* JFrame.add(c)
+  - throw an exception before JDK1.5
+  - JFrame.getContentPane().add(c)
+
+* setBounds();
+  setSize();
+  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  setIconImage();
+  setLocation();
+  setLocationByPlatform(true); => before display the frame
+  setResizable();
+  setTitle();
+  setUndecorated(true); => before display the frame
+  setVisible(true);
+  setExtendedState();
+  - JFrame.NORMAL
+  - JFrame.ICONIFIED
+  - JFrame.MAXIMIZED_HORIZ
+  - JFrame.MAXIMIZED_VERT
+  - JFrame.MAXIMIZED_BOTH
+  pack();
+
+* drawing in Java => Graphics object
+
+$ class MyComponent extends JComponent {
+    public void paintComponent(Graphics g) {}
+    public Dimension getPreferredSize() {}
+  }
+
+  class MyComponent extends JPanel (opaque => super.paintComponent(g))
+
+* float f = 1.2; // compile error
+
+* Rectangle2D => abstract class
+  Rectangle2D.Float/Double => concrete class (static inner class)
+
+* Shape -> RectangularShape -> Ellipse2D, Rectangle2D
+
+* setFrameFromCenter()
+  setFrameFromDiagonal()
+
+$ g2.setPaint(Color.RED);
+  g2.fill(rect);
+
+$ Color c = new Color(0, 128, 128);
+  c.brighter().brighter().brighter();
+  c.darker().darker().darker();
+
+* SystemColor constants
+
+$ String[] fontNames = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+
+* logical font names mapped to physical font names (jre/lib/fontconfig.properties)
+  - SansSerif, Serif, Monospaced, Dialog, DialogInput
+
+* 72 points per inch
+
+* ascent, descent, baseline, leading, height
+  height = ascent + descent + leading
+
+$ FontRenderContext context = g2.getFontRenderContext(); or
+  FontRenderContext context = getFontMetrics(font).getFontRenderContext();
+  Rectangle2D bounds = font.getStringBounds(message, context);
+
+$ LineMetrics metrics = font.getLineMetrics(message, context);
+  float descent = metrics.getDescent();
+  float leading = metrics.getLeading();
