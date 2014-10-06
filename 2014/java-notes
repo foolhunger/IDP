@@ -150,7 +150,7 @@ $ Size s = null;
   $ sb.append();
   $ String result = sb.toString();
   - StringBuilder, efficient, single-threaded
-  - StringBuffer, less-efficient, mulitple-threaded
+  - StringBuffer, less-efficient, multiple-threaded
 
 * char A = 'H';
   char ch1 = \u0041;
@@ -624,8 +624,6 @@ $ Employee[] staff = new Employee[10];
 
 * ==========> placeholder for Reflection <==========
 
-* Double.compare()
-
 * interface
   - can supply
   method declarations (public)
@@ -636,6 +634,15 @@ $ Employee[] staff = new Employee[10];
   method implementations
 
 * Arrays.sort(oa); => "oa" must implement Comparable<T> (ClassCastException)
+
+* int compareTo(T other) => subtraction trick
+  - integer => overflow
+  - fp => rounding issue, use Double.compare() instead
+
+* Manager extends Employee => also implements Comparable<Employee>
+  2 scenarios
+  - if (getClass() != other.getClass()) throw new ClassCastException()
+  - final compareTo()
 
 $ public interface Moveable {}
   public interface Powered extends Moveable {}
@@ -668,6 +675,7 @@ $ int[] original = {1, 2, 3, 4, 5};
 * inner class => phenomenon of compiler, not VM
 
 * javap -private classname
+  javap -v classname | find "version" => JDK1.6 = 50 (major version)
 
 $ public class TalkingClock$TimePrinter {
     public TalkingClock$TimePrinter(TalkingClock);
@@ -686,7 +694,7 @@ $ public class TalkingClock {
     new TalkingClock$TimePrinter(this, null);
 
 * local inner class
-  - no access specifier (hidden to block)
+  - no access specifier (block scope)
   - can access outer class fields + local variables (final)
 
 * blank final variable
@@ -710,15 +718,15 @@ $ class TalkingClock$1TimePrinter {
 
 * AWT => Abstract Window Toolkit
 
-* Write Once, Run Anywhere => Write Once, Debug Everywhere
-
 * Swing => non-peer-based (JFC)
 
-* Metal => Java look and feel (multiple themes)
+* laf
+  - Metal => Java look and feel (multiple themes)
+  - Nimbus => JDK1.7
 
 * SWT/JavaFX
 
-* top-level windows => frame (not painted on canvas)
+* frame => top-level windows
   - 0 * 0 pixels
   - hidden on close
   - invisible
@@ -741,17 +749,13 @@ $ Image img = new ImageIcon("icon.gif").getImage();
   - throw an exception before JDK1.5
   - JFrame.getContentPane().add(c)
 
-* setBounds();
-  setSize();
-  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-  setIconImage();
-  setLocation();
+* setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  setIconImage(Image);
+  setResizable(true);
   setLocationByPlatform(true); => before display the frame
-  setResizable();
-  setTitle();
   setUndecorated(true); => before display the frame
   setVisible(true);
-  setExtendedState();
+  setExtendedState(int);
   - JFrame.NORMAL
   - JFrame.ICONIFIED
   - JFrame.MAXIMIZED_HORIZ
