@@ -770,7 +770,15 @@ $ class MyComponent extends JComponent {
     public Dimension getPreferredSize() {}
   }
 
-  class MyComponent extends JPanel (opaque => super.paintComponent(g))
+  class MyPanel extends JPanel {
+    public void paintComponent(Graphics g) {
+      super.paintComponent(g); => opaque
+    }
+  }
+
+* Java2D library
+  Graphics2D g2 = (Graphics2D) g;
+  g2.draw(Shape);
 
 * float f = 1.2; // compile error
 
@@ -782,8 +790,9 @@ $ class MyComponent extends JComponent {
 * setFrameFromCenter()
   setFrameFromDiagonal()
 
-$ g2.setPaint(Color.RED);
-  g2.fill(rect);
+$ g.setColor(Color.RED);
+  g2.setPaint(Color.RED);
+  g2.fill(Shape);
 
 $ Color c = new Color(0, 128, 128);
   c.brighter().brighter().brighter();
