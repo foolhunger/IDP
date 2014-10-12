@@ -800,20 +800,25 @@ $ Color c = new Color(0, 128, 128);
 
 * SystemColor constants
 
-$ String[] fontNames = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+* font face name => font family name + suffix
 
-* logical font names mapped to physical font names (jre/lib/fontconfig.properties)
+$ String[] fontFamilyNames = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+
+* logical/physical font names mapping (jre/lib/fontconfig.properties)
   - SansSerif, Serif, Monospaced, Dialog, DialogInput
 
-* 72 points per inch
+* 1 point = 1 / 72 inch (25.4mm)
 
 * ascent, descent, baseline, leading, height
-  height = ascent + descent + leading
+  height = ascent + descent + leading (distance between two baselines)
 
-$ FontRenderContext context = g2.getFontRenderContext(); or
-  FontRenderContext context = getFontMetrics(font).getFontRenderContext();
-  Rectangle2D bounds = font.getStringBounds(message, context);
+$ FontRenderContext frc = g2.getFontRenderContext()
+  FontRenderContext frc = getFontMetrics(font).getFontRenderContext()
+  Rectangle2D bounds = font.getStringBounds(str, frc)
+  double ascent = -bounds.getY()
 
-$ LineMetrics metrics = font.getLineMetrics(message, context);
-  float descent = metrics.getDescent();
-  float leading = metrics.getLeading();
+$ LineMetrics metrics = font.getLineMetrics(str, frc)
+  float descent = metrics.getDescent()
+  float leading = metrics.getLeading()
+
+* g.drawImage()/g.copyArea()
