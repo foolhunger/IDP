@@ -822,3 +822,39 @@ $ LineMetrics metrics = font.getLineMetrics(str, frc)
   float leading = metrics.getLeading()
 
 * g.drawImage()/g.copyArea()
+
+* event delegation model
+
+* event source => (event object) => event listener
+
+* ActionListener interface
+  - public void actionPerformed(ActionEvent)
+  1) double-click item in list box
+  2) select menu item
+  3) click "enter" in text field
+  4) Timer elapsed
+
+* Object source = event.getSource();
+  if (source == redButton) {}
+
+* ==========> placeholder for javabeans EventHandler <==========
+
+* Swing plaf
+  - jre/lib/swing.properties (restart required)
+    swing.defaultlaf = javax.swing.plaf.metal.MetalLookAndFeel
+  $ UIManager.LookAndFeelInfo[] infos = UIManager.getInstalledLookAndFeels()
+    * javax.swing.plaf.metal.MetalLookAndFeel
+    * javax.swing.plaf.nimbus.NimbusLookAndFeel
+    * com.sun.java.swing.plaf.motif.MotifLookAndFeel
+    * com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+    * com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel
+  $ UIManager.setLookAndFeel(plaf)
+    SwingUtilities.updateComponentTreeUI(panel)
+
+* WindowListener => WindowAdapter
+
+* WindowStateListener interface
+  - public void windowStateChanged(WindowEvent)
+  - WindowEvent
+    * int getOldState()
+    * int getNewState()
