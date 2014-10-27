@@ -858,3 +858,45 @@ $ LineMetrics metrics = font.getLineMetrics(str, frc)
   - WindowEvent
     * int getOldState()
     * int getNewState()
+
+* Action interface extends ActionListener
+  - isEnabled()/setEnabled()
+  - addPropertyChangeListener()/removePropertyChangeListener()
+  - getValue()/putValue()
+    Action.NAME, Action.SMALL_ICON, Action.SHORT_DESCRIPTION, Action.MNEMONIC_KEY
+  - Action => AbstractAction
+
+* KeyStroke key = KeyStroke.getKeyStroke("ctrl B")
+
+* JComponent (3 input maps + 1 action map)
+  - input map (keystroke, action key)
+  - action map (action key, action object)
+  JComponent.WHEN_FOCUSED
+  JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT
+  JComponent.WHEN_IN_FOCUSED_WINDOW
+
+* MouseEvent
+  - getX()/getY()/getClickCount()
+  - getModifiersEx() (InputEvent)
+    InputEvent.BUTTON1_DOWN_MASK
+    InputEvent.BUTTON2_DOWN_MASK
+    InputEvent.BUTTON3_DOWN_MASK
+    InputEvent.CTRL_DOWN_MASK
+    if ((event.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0) {}
+
+* MouseListener => MouseAdapter
+  - mousePressed
+  - mouseReleased
+  - mouseClicked
+  - mouseEntered
+  - mouseExited
+  MouseMotionListener => MouseMotionAdapter
+  - mouseDragged
+  - mouseMoved
+
+* Cursor.getDefaultCursor()
+  Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR|Cursor.HAND_CURSOR)
+  Toolkit kit = Toolkit.getDefaultToolkit()
+  Cursor cursor = kit.createCustomCursor(img, new Point(10, 10), "description")
+
+* java.util.EventObject => java.awt.AWTEvent (low-level/semantic events)
