@@ -5,13 +5,18 @@
 
 * Initial revision of "git", the information manager from hell
   - April 7th, 2005 => self-hosted
-  - July 25th, 2005 => Junio Hamano (the obvious choice)
+  - July 25th, 2005 => Junio was the obvious choice
+    - Junio C Hamano a.k.a Gitster
+    - http://marc.info/?l=git&m=112243466603239
+  - https://github.com/git/git/commit/e83c5163316f89bfbde7d9ab23ca2e25604af290
+
+* I'm an egotistical bastard, and I name all my projects after myself. First Linux, now git.
 
 * VCSs
-  - SCCS => Source Code Control System
-  - RCS => Revision Control System
-  - CVS => Concurrent Versions System
-  - SVN => Subversion (Oct 2000 by Collabnet, now Apache)
+  - SCCS => Source Code Control System, 1970s, repository & serial-lock
+  - RCS => Revision Control System, 1980s, forward/reverse-delta
+  - CVS => Concurrent Versions System, 1986+, current-lock
+  - SVN => Subversion (Oct 2000 by Collabnet, now Apache), atomic transaction
   - BitKeeper/Bazaar/Mercurial etc.
 
 * Git on Windows
