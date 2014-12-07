@@ -1,0 +1,52 @@
+* tmux => terminal multiplexer
+
+* tmux -V
+
+* default key bindings
+  - C-b (prefix)
+  - s (select session)
+  - w (select window)
+  - 0..9 (select window 0..9)
+  - c (create window)
+  - $ (rename session)
+  - , (rename window)
+  - & (kill window)
+  - x (kill pane)
+  - " (split v pane)
+  - % (split h pane)
+  - { (swap previous pane)
+  - } (swap next pane)
+  - ! (break pane out of window)
+  - d (detach client)
+  - D (choose client to detach)
+  - f (find text)
+  - p (previous window)
+  - n (next window)
+  - o (next pane)
+  - : (enter command prompt)
+  - ? (list key bindings)
+  - q (display pane indexes)
+  - t (show time)
+  - spacebar (pane layout)
+
+* [session]
+  - tmux new-session -s <session> [-n <window>] [-d] => tmux new -s <session>
+  - tmux ls-sessions => tmux ls
+  - tmux attach -t <session>
+  - tmux kill-session -t <session>
+
+* [window]
+  - command prompt: new-window -n console
+
+* [pane]
+  - layout
+  * even-horizontal
+  * even-vertical
+  * main-horizontal
+  * main-vertical
+  * tiled
+
+* [misc]
+  - tmux list-keys
+  - tmux list-commands
+  - tmux info

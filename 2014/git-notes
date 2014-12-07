@@ -23,37 +23,47 @@
   - Cygwin
   - msysGit
 
-$ git help --all
+$ git help --all/-a/-g
 
 $ git help cmd
 $ git --help cmd
 $ git cmd --help
 
+$ git diff -w master origin/master -- build/build.xml
+
+* unstage changes
+  - git rm --cached <file> => no committal
+  - git reset HEAD <file>
+
 * both file/tag named main.c
- - git checkout main.c (tag)
- - git checkout -- main.c (file)
+  - git checkout main.c (tag)
+  - git checkout -- main.c (file)
 
 * Unix "gecos" information
+
+$ git commit --message="message" --author="author <author@example.com>"
 
 $ GIT_EDITOR (core.editor) [export GIT_EDITOR=vim]
 $ GIT_AUTHOR_NAME/GIT_COMMITTER_NAME (user.name)
 $ GIT_AUTHOR_EMAIL/GIT_COMMITTER_EMAIL (user.email)
 
-$ .git/config (default)
+$ .git/config (--local/default)
 $ $HOME/.gitconfig (--global)
 $ /etc/gitconfig (--system)
 
-$ git config --unset --global -e
+$ git config --unset --global -e/--edit -l/--list
 
-* object model
+* object model => pack
   - blob => binary large object
   - tree
   - commit
   - tag
 
-* SHA1 => 160-bit, 40-hex global unique identifier
+* SHA1 digest
+  - 160-bit, 40-hex, 20-byte
+  - 1st byte as directory => filesystem efficiency (256-way even partition)
 
-* .git => $GIT_DIR
+* .git => $GIT_DIR (template)
   - .git/{config, description, HEAD, index, info/exclude}
   - .git/refs/heads
   - .git/refs/tags
@@ -62,6 +72,9 @@ $ git config --unset --global -e
   - .git/objects/info
 
 * plumbing vs. porcelain
+
+* git cat-file/ls-files
+  git write-tree/commit-tree
 
 * lightweight/annotated tags
   - git tag -m => annotated
