@@ -83,7 +83,9 @@ $ git config --unset --global -e/--edit -l/--list
 
 * tracked/untracked/ignored
 
-* git rm [--cached] => remove from index and WD [index only]
+* git rm (index + WD)
+  git rm --cached (index)
+  git rm -f
 
 * git mv => git log --follow
 
@@ -91,18 +93,30 @@ $ mv foo bar => git mv foo bar
   git rm foo
   git add bar
 
-* gitignore sources
+* git hash-object -t -w
+
+* .gitignore
+  - can be in any directory
+  - propagated during clone
+  - $GIT_DIR/info/exclude (private to repo)
+
+* gitignore precedence
   - patterns from command line
-  - .gitignore in the same dir
-  - .gitignore in upward parent dirs
+  - .gitignore in the same directory
+  - .gitignore in upward parent directories
   - $GIT_DIR/info/exclude
   - core.excludesfile
 
-* .gitignore
+* .gitignore pattern
   - blank line and # => ignored
-  - literal filename => a file in any directory
-  - trailing / => dir only
+  - trailing / => directory only
+  - shell glob pattern (wildcards will not match /)
   - ! => invert
+  - leading /
+  - **
+  1) leading **/ => eg: **/foo/bar
+  2) trailing /** => eg: foo/**
+  3) /**/ => eg: a/**/b
 
 * git rev-parse (man)
   - .git/ref
@@ -264,23 +278,23 @@ $ git add -p
 (3) subgit install scm.git
     - ctrl+c to stop, can be resumed later
     - install SubGit pre/post-receive hooks
-    
+
 * commit new SVN revisions
   - Git commit author => Subversion author
   - find author's credentials in all configured sources
   - in case no credentials found, use any of the available
-  
+
 * SubGit background translation process
   - SVN revisions => Git commits (on Git user push), background process restarted if necessary
   - subgit fetch scm.git
   - git push origin +:refs/heads/bogus_branch (no-op push)
   - subgit shutdown scm.git
-  
+
 * configuration changes become effective on the fly
   - authors mapping (authors.txt)
   - svn credentials (passwd)
   - user-* hooks
-  
+
 * subgit uninstall scm.git
   - remove SubGit pre/post-receive hooks
   - with --purge option, also remove
