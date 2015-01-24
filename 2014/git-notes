@@ -54,7 +54,7 @@ $ /etc/gitconfig (--system)
 $ git config --unset --global -e/--edit -l/--list
 
 * object model => pack
-  - blob => binary large object
+  - blob => binary large object (opaque)
   - tree
   - commit
   - tag
@@ -78,6 +78,8 @@ $ git config --unset --global -e/--edit -l/--list
 
 * lightweight/annotated tags
   - git tag -m => annotated
+
+* configuration settings/index will not be propagated during clone
 
 * tracked/untracked/ignored
 
