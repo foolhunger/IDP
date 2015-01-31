@@ -900,3 +900,76 @@ $ LineMetrics metrics = font.getLineMetrics(str, frc)
   Cursor cursor = kit.createCustomCursor(img, new Point(10, 10), "description")
 
 * java.util.EventObject => java.awt.AWTEvent (low-level/semantic events)
+
+* ==========> placeholder for ch09 <==========
+
+* ==========> placeholder for ch10 <==========
+
+* unchecked exception => Error + RuntimeException
+  checked exception
+
+* uncaught exception => thread termination
+
+* subclass
+  - cannot throw more general checked exceptions
+  - cannot throw checked exceptions if superclass doesn't
+
+* ex.getMessage()
+  ex.getClass().getName()
+
+* try {}
+  catch (FileNotFoundException | UnknownHostException ex) {}
+  - JDK 1.7
+  - ex is final
+  - more efficient
+
+* initCause() / getCause()
+  - throw high-level exceptions
+  - wrap checked exceptions into runtime exceptions
+
+* public void updateRecord() throws SQLException {
+    try {}
+    catch (Exception ex) {
+      logger.log(level, message, ex);
+      throw ex;
+    }
+  }
+  - compilation error before JDK 1.7
+  - ex is the only checked exception in try + ex not changed in catch
+
+* try {
+    int r = n * n;
+    return r;
+  }
+  finally {
+    if (n == 2) return 0;
+  }
+
+* InputStream ins = ...
+  try {
+    code that throws exceptions
+  }
+  finally {
+    ins.close(); => mask the original exception
+  }
+
+* try-with-resources
+  - JDK 1.7
+  - resources implements AutoCloseable
+  - addSuppressed() / getSuppressed()
+  - catch/finally clauses executed after resources closure
+
+* Throwable.printStackTrace(PrintStream s)
+  Throwable.printStackTrace(PrintWriter s)
+
+* StackTraceElement[] Throwable.getStackTrace()
+
+* Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces()
+
+* assert condition / assert condition: expression => AssertionError
+
+* enable/disable assertion => classloader
+
+* java -ea:MyClass -ea:io.hsiao... MyApp
+  java -ea:... -da:MyClass MyApp
+  -esa/-dsa => system class

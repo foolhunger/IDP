@@ -126,7 +126,7 @@ $ mv foo bar => git mv foo bar
   - .git/refs/remotes/ref
   - .git/refs/remotes/ref/HEAD
 
-* symrefs
+* special symrefs
   - HEAD
   - ORIG_HEAD (bak of HEAD, merge/reset etc.)
   - FETCH_HEAD
@@ -144,12 +144,17 @@ $ mv foo bar => git mv foo bar
   - --merges --no-merges
   - --merge --left-right
 
+* caret (^) => select parent
+  tilde (~) => "first parent"
+
 * git log ^X Y => git log X..Y
   - X..Y => set subtraction (X.. => X..HEAD)
   - X...Y => symmetric difference
 
 $ git show HEAD~2
 $ git show origin/master:commons.io
+
+* DAG => directed acyclic graph
 
 * gitk [--all]
 
